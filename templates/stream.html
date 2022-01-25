@@ -1,0 +1,10 @@
+{% for day in days %}
+<h3>{{ day }}</h3>
+<ul>
+    {% for hour in schedule %}
+    <li>
+        <b>{{readable_hour(hour.key)}}</b> <a href="{{ show_details[hour[day]].url }}">{{ show_titles[hour[day]] }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endfor %}

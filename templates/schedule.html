@@ -1,0 +1,24 @@
+<table>
+    <tr>
+        <th>Time</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    {% for hour in schedule %}
+        <tr>
+            <th>{{readable_hour(hour.key)}}</th>
+            <td>{{ show_titles[hour.monday] }}</td>
+            <td>{{ show_titles[hour.tuesday] }}</td>
+            <td>{{ show_titles[hour.wednesday] }}</td>
+            <td>{{ show_titles[hour.thursday] }}</td>
+            <td>{{ show_titles[hour.friday] }}</td>
+            <td>{{ show_titles[hour.saturday] }}</td>
+            <td>{{ show_titles[hour.sunday] }}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,4 @@
+# api
+fastapi
+uvicorn[standard]
+jinja2

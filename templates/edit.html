@@ -1,0 +1,83 @@
+{% extends "default.html" %}
+
+{% block content %}
+<style>
+    .hidden-select > label {
+        color: rgb(180, 180, 180);
+    }
+
+    .checkable:checked + label {
+        color: rgb(3, 134, 241);
+    }
+
+    .hidden[type="checkbox"] {
+        width: 0;
+        height: 0;
+        --border-width: 0;
+    }
+
+    body>nav {
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
+        z-index: 99;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: var(--nav-background-color);
+        box-shadow: 0 1px 0 var(--nav-border-color);
+    }
+</style>
+<nav class="container">
+    <form method="post" action="/edit" id="edit_form">
+        <ul>
+            <li>
+                <label for="show">
+                    Show
+                </label>
+            </li>
+
+            <li>
+                <input list="shows" id="show" name="show" />
+            </li>
+            
+            <li>
+                <button type="submit">Update</button>
+            </li>
+
+            <li>
+                <button type="reset">Clear</button>
+            </li>
+        
+            <datalist id="shows">
+                {% for show in show_titles %}
+                    <option value="{{ show }}">{{ show_titles[show] }}</option>
+                {% endfor %}
+            </datalist>
+        </ul>
+    </form>
+</nav>
+<main class="container-fluid">
+    <figure>
+        <table>
+            <tr>
+                <th>Time</th>
+                {% for day in days %}
+                    <th>{{day}}</th>
+                {% endfor %}
+            </tr>
+            {% for hour in schedule %}
+                <tr>
+                    <th>{{ readable_hour(hour.key)}}</th>
+                    {% for day in days %}
+                        <td class="hidden-select">
+                            <input class="hidden checkable" type="checkbox" form="edit_form" id="{{hour.key}}:{{day}}" name="{{hour.key}}:{{day}}">
+                            <label for="{{hour.key}}:{{day}}">{{show_titles[hour[day]]}}</label>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </figure>
+</main>
+
+{% endblock %}
