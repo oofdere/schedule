@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from deta import Deta
 from datetime import datetime
 
+days = {"monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3, "friday": 4, "saturday": 5, "sunday": 6}
+
 app = Flask(__name__)
 
 deta = Deta("b04ojdm7_DZ4b7NfKv8hcea7gAVddWrJq5w8RaPkf")
@@ -36,8 +38,17 @@ def stream():
     schedule = raw.items
     return render_template("stream.html", schedule=schedule, show_titles=show_titles, show_details=show_details, days=days)
 
+@app.route("/now")
+def now():
+    raw = times.fetch()
+    schedule = raw.items
+    current_time = datetime.now()
+    current_day = days[datetime.today().weekday()]
+    return show_details[schedule[current_time.hour][current_day]]
+
 @app.route("/edit", methods=["GET", "POST"])
 def edit():
+    return "no"
     if request.method == "POST":
         show = request.form['show']
         updates = request.form.items()
